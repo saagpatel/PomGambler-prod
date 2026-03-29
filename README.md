@@ -1,147 +1,44 @@
 # AuraFlow (Pomodoro Gambler)
 
-A single-user web application that combines Pomodoro time management with virtual coin gambling.
+[![JavaScript](https://img.shields.io/badge/javascript-%23f7df1e?style=flat-square&logo=javascript)](#) [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](#)
+
+> Stay focused to earn coins — then bet them on whether the thing actually happens.
+
+AuraFlow combines Pomodoro time management with a virtual betting market. Complete work sessions to earn coins, then wager them on sports, tech, gaming, and politics events in a Polymarket-style interface. All data lives in your browser — no accounts, no servers.
 
 ## Features
 
-- **Pomodoro Timer**: Earn coins by completing focused work sessions
-  - 15 min = 20 coins (1x multiplier)
-  - 30 min = 40 coins (2x multiplier)
-  - 60 min = 100 coins (5x multiplier)
+- **Tiered coin rewards** — 15 min = 20 coins (1×), 30 min = 40 coins (2×), 60 min = 100 coins (5×)
+- **Virtual betting market** — four event categories with configurable odds and bet sizes (10–1,000 coins)
+- **Manual resolution** — resolve events YES/NO in History with automatic payout settlement
+- **Analytics snapshot** — completion rate, bet win rate, average session length, ROI
+- **Interruption detection** — closing the browser mid-session forfeits the coin reward
+- **Theme switching** — dark, light, or system preference with local persistence
+- **Fully offline** — no build step, no backend; open `index.html` and go
 
-- **Virtual Betting**: Place coin bets on various events
-  - Sports, Tech, Gaming, and Politics categories
-  - Polymarket-style interface with odds display
-  - Configurable bet amounts (10-1000 coins)
-  - Manual event resolution in History (YES/NO) with automatic payout settlement
+## Quick Start
 
-- **Analytics Snapshot**: See completion rate, bet win rate, average session length, average bet size, and ROI in History
+### Prerequisites
+- Any modern browser (Chrome, Firefox, Safari, Edge)
 
-- **Theme Switching**: Dark, light, or system theme with local preference persistence
+### Usage
+```bash
+# Simplest: open directly
+open index.html
 
-- **Interruption Detection**: Sessions interrupted by closing the browser don't award coins
-
-- **Complete History**: Track all work sessions and betting transactions
-
-- **Local Storage**: All data persists in browser (IndexedDB + SQLite)
-
-## Getting Started
-
-1. Open `index.html` in a web browser
-2. Or serve with a local HTTP server:
-   ```bash
-   python3 -m http.server 8000
-   # Then open http://localhost:8000
-   ```
-
-3. Optional helper scripts (same server behavior, easier workflow):
-   ```bash
-   # Normal dev mode (same as python3 -m http.server 8000)
-   ./scripts/dev-normal.sh
-
-   # Lean dev mode: uses ephemeral temp/cache paths and auto-cleanup on exit
-   ./scripts/dev-lean.sh
-
-   # Optional: snapshot disk-heavy folders before/after runs
-   ./scripts/measure-disk.sh
-   ```
-
-4. Start with 100 coins
-5. Complete work sessions to earn more coins
-6. Place bets on events in the Dashboard
-7. Resolve event outcomes from History to settle winnings
+# Or serve locally
+python3 -m http.server 8000
+# Then open http://localhost:8000
+```
 
 ## Tech Stack
 
-- Vanilla JavaScript (ES6 modules)
-- sql.js (SQLite in WebAssembly)
-- IndexedDB for persistence
-- CSS3 with dark theme
-- No build tools required
-
-## File Structure
-
-```
-├── index.html              # Main entry point
-├── styles/                 # CSS files
-├── js/
-│   ├── core/              # Core infrastructure
-│   ├── models/            # Data models
-│   ├── services/          # Business logic
-│   ├── components/        # UI components
-│   ├── utils/             # Utilities
-│   └── data/              # Initial seed data
-├── lib/                   # sql.js library
-└── assets/                # Static assets
-```
-
-## Browser Compatibility
-
-Works in modern browsers with:
-- ES6 module support
-- IndexedDB
-- WebAssembly
-
-## Privacy
-
-All data stays local in your browser. No server required, no data collection.
-
-## Dev Modes and Cleanup
-
-### Normal Dev
-
-```bash
-./scripts/dev-normal.sh
-```
-
-- Fastest startup.
-- Leaves normal local runtime artifacts untouched.
-
-### Lean Dev
-
-```bash
-./scripts/dev-lean.sh
-```
-
-- Uses temporary runtime/cache locations (`TMPDIR`, `XDG_CACHE_HOME`) for the server process.
-- Automatically runs a targeted cleanup when the server exits.
-- Better for low disk usage, with a small startup overhead.
-
-### Cleanup Commands
-
-```bash
-# Remove heavy build/runtime artifacts only
-./scripts/clean-heavy.sh
-
-# Remove all reproducible local caches (includes heavy cleanup)
-./scripts/clean-all-local.sh
-```
-
-`clean-heavy` avoids dependency directories so day-to-day restarts stay reasonably fast.  
-`clean-all-local` is a deeper reset that may increase next startup time.
-
-### Daily Low-Disk Command
-
-```bash
-./scripts/dev-lean.sh
-```
-
-Use this as your default daily command when disk usage is your top priority.
-
-## Verification
-
-Run the canonical repository checks:
-
-```bash
-bash .codex/scripts/run_verify_commands.sh
-```
-
-## GitHub Pages Deployment
-
-The repository includes `.github/workflows/deploy-pages.yml` using the official Pages build/upload/deploy flow.
-
-- Build artifact: `node scripts/ci/build-pages.mjs`
-- Post-deploy smoke: `node scripts/ci/smoke-pages.mjs` (run in CI with deployed URL)
+| Layer | Technology |
+|-------|------------|
+| Language | Vanilla JavaScript (ES modules) |
+| Storage | IndexedDB + SQLite (local) |
+| UI | HTML + CSS (no framework) |
+| Deployment | Static — no build step required |
 
 ## License
 
