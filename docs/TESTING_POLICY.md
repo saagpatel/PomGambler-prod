@@ -11,6 +11,8 @@
 State-management security regressions are covered by source-level contract tests
 that require prototype-polluting key segments to stay blocked before dynamic
 state writes.
+Writable state paths are also kept on an explicit setter allowlist so new nested
+state writes must be intentional and covered by the regression contract.
 
 ## Flake Handling
 
