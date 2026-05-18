@@ -3,6 +3,21 @@
 import { eventBus } from './eventbus.js';
 import { BET_AMOUNT, TABS } from '../utils/constants.js';
 
+const BLOCKED_STATE_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
+function parseStatePath(key) {
+    if (typeof key !== 'string' || key.trim() === '') {
+        throw new TypeError('State key must be a non-empty string');
+    }
+
+    const keys = key.split('.');
+    if (keys.some((part) => part === '' || BLOCKED_STATE_KEYS.has(part))) {
+        throw new TypeError('Unsafe state key');
+    }
+
+    return keys;
+}
+
 class State {
     constructor() {
         this.data = {
@@ -28,8 +43,8 @@ class State {
     }
 
     get(key) {
-        if (key.includes('.')) {
-            const keys = key.split('.');
+        const keys = parseStatePath(key);
+        if (keys.length > 1) {
             let value = this.data;
             for (const k of keys) {
                 value = value[k];
@@ -41,11 +56,14 @@ class State {
     }
 
     set(key, value) {
-        if (key.includes('.')) {
-            const keys = key.split('.');
+        const keys = parseStatePath(key);
+        if (keys.length > 1) {
             let obj = this.data;
             for (let i = 0; i < keys.length - 1; i++) {
                 obj = obj[keys[i]];
+                if (obj === undefined || obj === null) {
+                    throw new TypeError('State path does not exist');
+                }
             }
             obj[keys[keys.length - 1]] = value;
         } else {
