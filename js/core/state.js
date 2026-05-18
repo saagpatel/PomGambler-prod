@@ -4,6 +4,24 @@ import { eventBus } from './eventbus.js';
 import { BET_AMOUNT, TABS } from '../utils/constants.js';
 
 const BLOCKED_STATE_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+const STATE_SETTERS = new Map([
+    ['currentBalance', (data, value) => { data.currentBalance = value; }],
+    ['betAmount', (data, value) => { data.betAmount = value; }],
+    ['activeTab', (data, value) => { data.activeTab = value; }],
+    ['timer', (data, value) => { data.timer = value; }],
+    ['timer.isRunning', (data, value) => { data.timer.isRunning = value; }],
+    ['timer.isPaused', (data, value) => { data.timer.isPaused = value; }],
+    ['timer.startTime', (data, value) => { data.timer.startTime = value; }],
+    ['timer.duration', (data, value) => { data.timer.duration = value; }],
+    ['timer.multiplier', (data, value) => { data.timer.multiplier = value; }],
+    ['timer.elapsedSeconds', (data, value) => { data.timer.elapsedSeconds = value; }],
+    ['timer.pausedAtSeconds', (data, value) => { data.timer.pausedAtSeconds = value; }],
+    ['events', (data, value) => { data.events = value; }],
+    ['history', (data, value) => { data.history = value; }],
+    ['history.sessions', (data, value) => { data.history.sessions = value; }],
+    ['history.bets', (data, value) => { data.history.bets = value; }],
+    ['user', (data, value) => { data.user = value; }],
+]);
 
 function parseStatePath(key) {
     if (typeof key !== 'string' || key.trim() === '') {
@@ -56,20 +74,13 @@ class State {
     }
 
     set(key, value) {
-        const keys = parseStatePath(key);
-        if (keys.length > 1) {
-            let obj = this.data;
-            for (let i = 0; i < keys.length - 1; i++) {
-                obj = obj[keys[i]];
-                if (obj === undefined || obj === null) {
-                    throw new TypeError('State path does not exist');
-                }
-            }
-            obj[keys[keys.length - 1]] = value;
-        } else {
-            this.data[key] = value;
+        const statePath = parseStatePath(key).join('.');
+        const setter = STATE_SETTERS.get(statePath);
+        if (!setter) {
+            throw new TypeError('State path is not writable');
         }
 
+        setter(this.data, value);
         eventBus.emit('state:changed', { key, value });
     }
 

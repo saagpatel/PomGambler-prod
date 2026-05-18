@@ -16,8 +16,13 @@ test('state paths block prototype-polluting key segments', () => {
 test('state setters reject missing nested paths before assignment', () => {
   assert.match(
     stateSource,
-    /obj === undefined \|\| obj === null/,
-    'Expected nested writes to fail before assigning into a missing path.',
+    /const STATE_SETTERS = new Map/,
+    'Expected writable state paths to be allowlisted.',
   );
-  assert.match(stateSource, /throw new TypeError\('State path does not exist'\)/);
+  assert.match(stateSource, /\['timer\.duration', \(data, value\) => \{ data\.timer\.duration = value; \}\]/);
+  assert.doesNotMatch(
+    stateSource,
+    /obj\[keys\[keys\.length - 1\]\] = value/,
+    'Expected state writes to avoid recursively assigning through dynamic property chains.',
+  );
 });
