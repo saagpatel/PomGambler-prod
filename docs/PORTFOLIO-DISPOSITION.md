@@ -171,7 +171,7 @@ isn't worth the audience size.
 
 | Field | Value |
 |---|---|
-| `origin/main` tip | `f3cbb8d` chore: add initial CHANGELOG |
+| `origin/main` tip | `6f961db` docs(context): recover portfolio context (#8) |
 | Last substantive commit | `f47d67e` feat(release): complete production-readiness delivery |
 | Default branch | `main` |
 | Architecture | PWA (HTML + JS + service worker + manifest) plus OpenAPI-defined backend surface |
