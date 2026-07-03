@@ -31,6 +31,38 @@ python3 -m http.server 8000
 # Then open http://localhost:8000
 ```
 
+## Getting Started
+
+Open `index.html` directly for the simplest local run, or serve the folder with Python's built-in static server when browser APIs need a localhost origin.
+
+```bash
+open index.html
+python3 -m http.server 8000
+```
+
+## Dev Modes and Cleanup
+
+### Normal Dev
+
+Use the canonical verification script list before shipping a change:
+
+```bash
+bash .codex/scripts/run_verify_commands.sh
+```
+
+### Lean Dev
+
+For a quick local confidence pass while editing static assets, run the fast syntax and regression checks directly:
+
+```bash
+node scripts/ci/check-static.mjs
+node --test tests/regression/*.test.mjs
+```
+
+### Cleanup Commands
+
+Generated local smoke-test state should stay out of commits. Remove temporary local server logs or browser scratch data before closing a branch.
+
 ## Tech Stack
 
 | Layer | Technology |
