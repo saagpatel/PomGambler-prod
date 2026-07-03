@@ -29,7 +29,7 @@ jobs:
       - name: Build static artifact
         run: node scripts/ci/build-pages.mjs
 
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
