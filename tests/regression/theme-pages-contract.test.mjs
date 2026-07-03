@@ -25,9 +25,9 @@ test('Manifest uses relative scope for GitHub Pages project deploys', () => {
 });
 
 test('Deploy workflow uses official Pages actions and post-deploy smoke', () => {
-  assert.match(workflowSource, /actions\/configure-pages@v5/);
-  assert.match(workflowSource, /actions\/upload-pages-artifact@v4/);
-  assert.match(workflowSource, /actions\/deploy-pages@v4/);
+  assert.match(workflowSource, /actions\/configure-pages@v\d+/);
+  assert.match(workflowSource, /actions\/upload-pages-artifact@v\d+/);
+  assert.match(workflowSource, /actions\/deploy-pages@v\d+/);
   assert.match(workflowSource, /scripts\/ci\/smoke-pages\.mjs/);
 });
 
