@@ -8,6 +8,12 @@
 4. Documentation/contract checks (`scripts/ci/check-docs.mjs`)
 5. Post-deploy Pages smoke (`scripts/ci/smoke-pages.mjs`)
 
+State-management security regressions are covered by source-level contract tests
+that require prototype-polluting key segments to stay blocked before dynamic
+state writes.
+Writable state paths are also kept on an explicit setter allowlist so new nested
+state writes must be intentional and covered by the regression contract.
+
 ## Flake Handling
 
 - Keep deterministic tests in canonical verify commands.
