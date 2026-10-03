@@ -19,7 +19,7 @@ state writes must be intentional and covered by the regression contract.
 - Keep deterministic tests in canonical verify commands.
 - If a flaky test appears, isolate root cause before re-adding it to canonical verify.
 - Avoid hidden retries in core local verify flow.
-- CI deploy smoke is allowed one rerun at workflow level, but persistent flake is a release blocker.
+- CI deploy smoke runs once with no automatic retry; one manual workflow rerun is allowed, but persistent flake is a release blocker.
 
 ## Release Gate Standard
 
