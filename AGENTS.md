@@ -9,7 +9,7 @@
 
 ## What This Project Is
 
-PomGambler, branded AuraFlow in the README, is a fully offline browser app that combines Pomodoro focus sessions with a virtual prediction market. Users earn coins by completing timed work blocks, then wager those coins on manually resolved events across sports, tech, gaming, and politics categories.
+PomGambler, branded AuraFlow in the README, is a locally served browser app that combines Pomodoro focus sessions with a virtual prediction market. Offline reloads require all app modules to be cached; the service worker does not precache every required service module. Users earn coins by completing timed work blocks, then wager those coins on manually resolved sports, tech, gaming, politics, and custom events.
 
 ## Current State
 
@@ -36,7 +36,7 @@ focused/full checks and conditional browser checks with disposable local data.
 
 ## Known Risks
 
-- Keep it offline and account-free; no backend or network dependency is part of the product promise.
+- Keep it offline and account-free; no backend or external network dependency is part of the product promise.
 - Betting is virtual-only with local coins; do not introduce real-money mechanics.
 - Static deployment/no-build simplicity is part of the appeal, so avoid framework churn unless the operator explicitly re-scopes the project.
 

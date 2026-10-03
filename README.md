@@ -9,12 +9,12 @@ AuraFlow combines Pomodoro time management with a virtual betting market. Comple
 ## Features
 
 - **Tiered coin rewards** — 15 min = 20 coins (1×), 30 min = 40 coins (2×), 60 min = 100 coins (5×)
-- **Virtual betting market** — four event categories with configurable odds and bet sizes (10–1,000 coins)
+- **Virtual betting market** — sports, tech, gaming, politics, and custom events with configurable odds and bet sizes (10–1,000 coins)
 - **Manual resolution** — resolve events YES/NO in History with automatic payout settlement
-- **Analytics snapshot** — completion rate, bet win rate, average session length, ROI
-- **Interruption detection** — closing the browser mid-session forfeits the coin reward
+- **Analytics snapshot** — completion rate, bet win rate, average completed-session length, ROI
+- **Interruption detection** — reopening more than five minutes after the expected session end forfeits the coin reward; earlier reopening resumes or completes the session
 - **Theme switching** — dark, light, or system preference with local persistence
-- **Fully offline after local loading** — no build step or backend; serve the static files locally
+- **Local operation** — no build step or external backend; serve the static files locally. Offline reloads require all app modules to be cached; the service worker does not precache every required service module
 
 ## Quick Start
 
