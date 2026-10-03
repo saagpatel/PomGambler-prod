@@ -14,37 +14,36 @@ AuraFlow combines Pomodoro time management with a virtual betting market. Comple
 - **Analytics snapshot** — completion rate, bet win rate, average session length, ROI
 - **Interruption detection** — closing the browser mid-session forfeits the coin reward
 - **Theme switching** — dark, light, or system preference with local persistence
-- **Fully offline** — no build step, no backend; open `index.html` and go
+- **Fully offline after local loading** — no build step or backend; serve the static files locally
 
 ## Quick Start
 
 ### Prerequisites
 - Any modern browser (Chrome, Firefox, Safari, Edge)
+- Python 3 for the local static server
+- Node.js 22 for verification (matching CI); no npm install is needed
 
 ### Usage
 ```bash
-# Simplest: open directly
-open index.html
-
-# Or serve locally
-python3 -m http.server 8000
-# Then open http://localhost:8000
+python3 -m http.server 8000 --bind 127.0.0.1
+# Then open http://127.0.0.1:8000
 ```
 
 ## Getting Started
 
-Open `index.html` directly for the simplest local run, or serve the folder with Python's built-in static server when browser APIs need a localhost origin.
-
-```bash
-open index.html
-python3 -m http.server 8000
-```
+Serve the repository root over localhost. ES modules, WASM loading and PWA
+browser APIs require an HTTP origin for this workflow; do not use a `file://`
+launch as the verification path. Use a fresh browser profile/origin with
+synthetic coins and events so existing IndexedDB, local storage and service
+worker state remain untouched. Stop only the server you started when finished.
 
 ## Dev Modes and Cleanup
 
 ### Normal Dev
 
-Use the canonical verification script list before shipping a change:
+Run from the repository root with Node.js 22 and Python 3. There is no
+`package.json`; use these commands rather than the legacy npm Makefile targets.
+The complete local gate is defined in [`.codex/verify.commands`](.codex/verify.commands):
 
 ```bash
 bash .codex/scripts/run_verify_commands.sh
@@ -58,6 +57,21 @@ For a quick local confidence pass while editing static assets, run the fast synt
 node scripts/ci/check-static.mjs
 node --test tests/regression/*.test.mjs
 ```
+
+For a focused regression, pass one file, for example
+`node --test tests/regression/timer-controls-contract.test.mjs`.
+The suite checks source contracts; it does not exercise a real browser. There
+is no separate formatter or TypeScript gate. The optional static artifact build
+is `node scripts/ci/build-pages.mjs` (writes `dist/`); no build is needed to run
+locally. Local HTTP smoke starts/stops its own Python server on a random port.
+
+For changed UI, timer, betting, import/export or persistence behavior, also
+check the affected flow in that fresh browser profile: no loading/console
+error, timer start/pause/reset, synthetic wager and manual settlement, theme
+and reload persistence, or a synthetic export/import round trip as applicable.
+Use [Testing Policy](docs/TESTING_POLICY.md) for the existing broader layers.
+Local checks do not replace the authorized live Pages release smoke; do not
+run deployment or point verification at a production URL.
 
 ### Cleanup Commands
 

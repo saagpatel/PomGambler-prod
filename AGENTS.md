@@ -27,13 +27,12 @@ The README describes the working static app surface: tiered focus rewards, Index
 ## How To Run
 
 ```bash
-# Simplest: open directly
-open index.html
-
-# Or serve locally
-python3 -m http.server 8000
-# Then open http://localhost:8000
+python3 -m http.server 8000 --bind 127.0.0.1
+# Then open http://127.0.0.1:8000
 ```
+
+Use [README verification](README.md#dev-modes-and-cleanup) for prerequisites,
+focused/full checks and conditional browser checks with disposable local data.
 
 ## Known Risks
 
