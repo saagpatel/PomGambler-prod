@@ -24,10 +24,10 @@ test('Manifest uses relative scope for GitHub Pages project deploys', () => {
   assert.equal(manifest.scope, './');
 });
 
-test('Deploy workflow uses official Pages actions and post-deploy smoke', () => {
-  assert.match(workflowSource, /actions\/configure-pages@v\d+/);
-  assert.match(workflowSource, /actions\/upload-pages-artifact@v\d+/);
-  assert.match(workflowSource, /actions\/deploy-pages@v\d+/);
+test('Deploy workflow pins official Pages actions and runs post-deploy smoke', () => {
+  assert.match(workflowSource, /actions\/configure-pages@[0-9a-f]{40} # v\d+\.\d+\.\d+/);
+  assert.match(workflowSource, /actions\/upload-pages-artifact@[0-9a-f]{40} # v\d+\.\d+\.\d+/);
+  assert.match(workflowSource, /actions\/deploy-pages@[0-9a-f]{40} # v\d+\.\d+\.\d+/);
   assert.match(workflowSource, /scripts\/ci\/smoke-pages\.mjs/);
 });
 
